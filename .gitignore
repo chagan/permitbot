@@ -1,0 +1,6 @@
+env/
+config.py
+*.pyc
+tweeted_demo_ids.txt
+tweeted_permit_ids.txt
+.DS_Store
