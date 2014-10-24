@@ -44,19 +44,19 @@ You can run the project off your own machine. This isn't a problem if you only w
 More likely you'll want to set this up on a server. I used space I have avaialble for personal projects. Lauren Orsini wrote a similar piece using Heroku, which could be a better fit for your project.
 
 All the code that interacts with the data portal and twitter lives in permitbot.py. Here are the functions and what they do:
-*post_status(text): Takes text and posts it to twitter
-*test_api(): Tests your connection to the twitter api
-*get_data(limit=1000,offset=0, days=1): Gets data from the city of Chicago data portal.
-*find_high(days=1): Parses building permit data to find any with an estimated cost greater than $500,000.
-*get_summary(days=30): Parses building permit data to get a summary of permit costs for a given number of days.
-*find_demo(days=1): Parses building permit data to find demolition permits
-*add_id_to_file(id,file): Add a permit ID to a text file.
-*duplicate_check(id,file): Check a text file to see if a given ID is in there.
+- post_status(text): Takes text and posts it to twitter
+- test_api(): Tests your connection to the twitter api
+- get_data(limit=1000,offset=0, days=1): Gets data from the city of Chicago data portal.
+- find_high(days=1): Parses building permit data to find any with an estimated cost greater than $500,000.
+- get_summary(days=30): Parses building permit data to get a summary of permit costs for a given number of days.
+- find_demo(days=1): Parses building permit data to find demolition permits
+- add_id_to_file(id,file): Add a permit ID to a text file.
+- duplicate_check(id,file): Check a text file to see if a given ID is in there.
 
 The basic workflow is this:
-*Call get_data to collect permits from a given time frame. The data portal api only returns 1,000 results at a time, so for anything more than that it iterates until all the permits are saved.
-*Perform whatever function we're intersted in, such as looking for large permits or demolitions.
-*If a permit matches our filters, check if its ID is in a text file we've started to track what permits we've tweeted about. If it is, we pass. If not, we tweet.
+* Call get_data to collect permits from a given time frame. The data portal api only returns 1,000 results at a time, so for anything more than that it iterates until all the permits are saved.
+* Perform whatever function we're intersted in, such as looking for large permits or demolitions.
+* If a permit matches our filters, check if its ID is in a text file we've started to track what permits we've tweeted about. If it is, we pass. If not, we tweet.
 
 I used a python package called Fabric to help manage the actual sending of tweets. In fabfile.py you'll find a few simple functions that can be called from the command line and trigger Permit Bot.
 
