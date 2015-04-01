@@ -1,6 +1,6 @@
 """
 Bot to get data from Chicago data portal and tweet it.
-""" 
+"""
 
 #!/usr/bin/env python
 
@@ -20,7 +20,7 @@ def post_status(text):
 
 	status = api.PostUpdate(text)
 
-# Test the conncetion to the twitter api
+# Test connection to twitter api
 def test_api():
 	api = twitter.Api(consumer_key=config['consumer_key'],
 	            		consumer_secret=config['consumer_secret'],
@@ -29,9 +29,9 @@ def test_api():
 	
 	print api.VerifyCredentials()
 
-# Search the dataportal for building permits for the given number of days, limit and offset
+# Search the dataportal for building permits or the given number of days, limit and offset
 # Days controls how far back to look, offset controls how far back in the list to look,
-# and limit is max number of results to return in a list. 1000 is most portal allows.
+# and limit is max number of results to return. 1000 is most portal allows.
 def get_data(limit=1000,offset=0, days=1):
 
 	days = int(days)
@@ -78,7 +78,7 @@ def find_high(days=1):
 		permitdate = datetime.strptime(permit['_issue_date'],"%Y-%m-%dT%H:%M:%S")
 		prettydate = permitdate.strftime("%b. %d")
 
-		link = "http://www.licensedchicagocontractors.com/?pid=%s" % num
+		link = "http://chicagocityscape.com/?pid=%s" % num
 		
 		# Check if permit value is large enough
 		if cost > 500000:
@@ -86,7 +86,7 @@ def find_high(days=1):
 			# Check if permit is already in our list
 			dupe = duplicate_check(id,'tweeted_permit_ids.txt')
 			if dupe == 0:
-				text =  "We got one: $"+ "{:,.0f}".format(cost) +" permit " + permit_type +" issued on " + prettydate + " at " + address + " " +link
+				text =  "We got a big one: $"+ "{:,.0f}".format(cost) +" permit " + permit_type +" issued on " + prettydate + " at " + address + " " +link
 				print text
 				post_status(text)
 
@@ -102,7 +102,7 @@ def get_summary(days=30):
 
 	cost = 0
 	offset = 0
-	link = 'http://www.licensedchicagocontractors.com/dashboard.php'
+	link = 'http://chicagocityscape.com/dashboard.php'
 
 	# Loop through permits can get more data until we run out of permits
 	while len(permits) > 0:
@@ -122,7 +122,7 @@ def get_summary(days=30):
 	print text
 	post_status(text)
 
-# Search for individual permits greater than $500,000 and tweet
+# Search for individual demolition permits and tweet
 # Takes number of days to look back as arguement
 def find_demo(days=1):
 	
@@ -148,7 +148,7 @@ def find_demo(days=1):
 		permitdate = datetime.strptime(permit['_issue_date'],"%Y-%m-%dT%H:%M:%S")
 		prettydate = permitdate.strftime("%b. %d")
 
-		link = "http://www.licensedchicagocontractors.com/?pid=%s" % num
+		link = "http://chicagocityscape.com/?pid=%s" % num
 		
 		# Check if permit type is demolition
 		if permit_type == " wrecking/demolition":

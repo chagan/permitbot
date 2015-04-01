@@ -5,8 +5,8 @@ Permit Bot is a twitter bot for tweeting about Chicago building permits, using p
 ##What's happening here
 Permit bot is basically a set of python functions, some Fabric and then a cron job that calls the fabfile. There is also some Duct Tape.
 
-##How setup Permit Bot
-Twitter bots can be a number of things. Some tweet about earthquakes, home runs, or even do complicated things like tell you what public radio station is nearest to to.
+##How to setup Permit Bot
+Twitter bots can be a number of things. Some tweet about earthquakes, home runs, or even do complicated things like tell you what public radio station is nearest to you.
 
 Permit Bot is a very simple implementation that looks for permits at the city of Chicago data portal at scheduled times and then tweets if the permits meet certain requirements.
 
@@ -21,7 +21,7 @@ The other thing you'll need from this screen is your API keys, available in the 
 ###Clone this repository
 This is the part where you actually get this code.
 
-From the main repository, use the Clone in Desktop or Download buttons to get the files to your computer. If you're familiar with git and github, you can clone the repo like you would anything else (and you probably know how to do this better than I do, so please submit some pull requests to improve this). Once you have everything, run `pip install -r requirements.txt` to install the needed packages, mainly Python-Twitter and Fabric.
+From the main repository, use the Clone in Desktop or Download buttons to get the files to your computer. If you're familiar with git and github, you can [clone the repo like you would anything else](https://help.github.com/articles/importing-a-git-repository-using-the-command-line/) (and you probably know how to do this better than I do, so please submit some pull requests to improve this). Once you have everything, run `pip install -r requirements.txt` to install the needed packages, mainly Python-Twitter and Fabric.
 
 The main thing you'll need to change is a file called config_template.py. This is the file that has all of the Twitter keys that will be used to call the API.
 
@@ -41,7 +41,7 @@ There are a few ways to do this.
 
 You can run the project off your own machine. This isn't a problem if you only want to send our tweets occasionally or have a computer that's always on.
 
-More likely you'll want to set this up on a server. I used space I have avaialble for personal projects. Lauren Orsini wrote a similar piece using Heroku, which could be a better fit for your project.
+More likely you'll want to set this up on a server. I used space I have avaialble for personal projects. [Lauren Orsini wrote a similar piece using Heroku](http://readwrite.com/2014/06/20/random-non-sequitur-twitter-bot-instructions), which could be a better fit for your project.
 
 All the code that interacts with the data portal and twitter lives in permitbot.py. Here are the functions and what they do:
 - post_status(text): Takes text and posts it to twitter
@@ -72,4 +72,4 @@ SHELL=/bin/bash
 
 You can [read more about crons here](http://en.wikipedia.org/wiki/Cron). The command takes five time entries (minutes, hours, days, week, day of the week) from left to right. For example, I have jobs running on the 23rd and 47th minute every day. The first runs during specified hours (13-23, in GMT) and the other only once.
 
-After the time I change the directory into where Permit Bot is, start my virtual environment and call a fabric command. That runs through the Permit Bot code, and tweets if any new permits are found.
+At the specified time the cron changes the directory to where Permit Bot code lives, start my virtual environment and calls a fabric command. That runs through the Permit Bot code, and tweets if any new permits are found. While it runs every hour, in practice tweets are only sent in the morning as the data is most often updated once a day.
