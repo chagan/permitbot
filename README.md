@@ -6,7 +6,7 @@ Permit Bot is a twitter bot for tweeting about Chicago building permits, using p
 Permit bot is basically a set of python functions, some Fabric and then a cron job that calls the fabfile. There is also some Duct Tape.
 
 ##How to setup Permit Bot
-Twitter bots can be a number of things. Some tweet about earthquakes, home runs, or even do complicated things like tell you what public radio station is nearest to you.
+Twitter bots can be a number of things. Some tweet about [earthquakes](http://www.poynter.org/news/mediawire/243744/l-a-times-reporter-talks-about-his-story-writing-quakebot/), [home runs](https://twitter.com/MLBHR), or even do complicated things like tell you [what public radio station is nearest to you](https://twitter.com/findmystation).
 
 Permit Bot is a very simple implementation that looks for permits at the city of Chicago data portal at scheduled times and then tweets if the permits meet certain requirements.
 
