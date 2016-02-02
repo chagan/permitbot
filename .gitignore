@@ -3,4 +3,5 @@ config.py
 *.pyc
 tweeted_demo_ids.txt
 tweeted_permit_ids.txt
+replied_mentions.txt
 .DS_Store

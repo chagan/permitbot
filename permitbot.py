@@ -28,6 +28,7 @@ def test_api():
 	                    access_token_secret=config['access_token_secret'])
 	
 	print api.VerifyCredentials()
+	return api
 
 # Search the dataportal for building permits or the given number of days, limit and offset
 # Days controls how far back to look, offset controls how far back in the list to look,
@@ -163,6 +164,32 @@ def find_demo(days=1):
 				# Once tweeted, add file to list
 				add_id_to_file(id,'tweeted_demo_ids.txt')
 
+# Check mentions and reply if tweet matches pattern
+def reply():
+
+	api = twitter.Api(consumer_key=config['consumer_key'],
+	            		consumer_secret=config['consumer_secret'],
+	                    access_token_key=config['access_token_key'],
+	                    access_token_secret=config['access_token_secret'])
+
+	id_file = 'replied_mentions.txt'
+	since_id = get_most_recent_id(id_file)
+
+	mentions = api.GetMentions(since_id=since_id)
+	
+	for tweet in reversed(mentions):
+		id = tweet.id_str
+		print id
+		replied = duplicate_check(id,'replied_mentions.txt')
+
+		if replied == 0:
+			add_id_to_file(id,id_file)
+			if tweet.coordinates:
+				print tweet.coordinates
+
+
+
+
 # Check if a permit has already been tweeted by comparing against external file of ids
 def duplicate_check(id,file):
 	if not os.path.isfile(file):
@@ -179,3 +206,16 @@ def duplicate_check(id,file):
 def add_id_to_file(id,file):
 	with open(file, 'a') as file:
 		file.write(str(id) + "\n")
+
+# Get first id from external file
+def get_most_recent_id(file):
+	if not os.path.isfile(file):
+		open(file, 'w+')
+
+	with open(file, 'r') as file:
+		first_id = file.readline().strip()
+		return first_id
+
+
+if __name__ == "__main__":
+	reply()
