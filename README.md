@@ -1,24 +1,24 @@
-#Permit Bot
+# Permit Bot
 
 Permit Bot is a twitter bot for tweeting about Chicago building permits, using public data from the city data portal. You can see the [source data here](https://data.cityofchicago.org/Buildings/Building-Permits/ydr8-5enu) and [follow Permit Bot here](https://twitter.com/permitbot).
 
-##What's happening here
+## What's happening here
 Permit bot is basically a set of python functions, some Fabric and then a cron job that calls the fabfile. There is also some Duct Tape.
 
-##How to setup Permit Bot
+## How to setup Permit Bot
 Twitter bots can be a number of things. Some tweet about [earthquakes](http://www.poynter.org/news/mediawire/243744/l-a-times-reporter-talks-about-his-story-writing-quakebot/), [home runs](https://twitter.com/MLBHR), or even do complicated things like tell you [what public radio station is nearest to you](https://twitter.com/findmystation).
 
 Permit Bot is a very simple implementation that looks for permits at the city of Chicago data portal at scheduled times and then tweets if the permits meet certain requirements.
 
-###Start a Twitter account
+### Start a Twitter account
 Go to [twitter.com](https://twitter.com) and open a new account. You'll need an email address that isn't attached to another account and a cell number (for later). You have to remove this number from any accounts it's already attached to, but you can add it back after this process.
 
-###Create a twitter API key
+### Create a twitter API key
 Go to [apps.twitter.com](https://apps.twitter.com/) and start a new app. Once that's created, go to the permissions tab and make sure it's set to Read and Write.
 
 The other thing you'll need from this screen is your API keys, available in the Keys and Access Tokens tab. We don't need them just yet, but keep them handy for the next step.
 
-###Clone this repository
+### Clone this repository
 This is the part where you actually get this code.
 
 From the main repository, use the Clone in Desktop or Download buttons to get the files to your computer. If you're familiar with git and github, you can [clone the repo like you would anything else](https://help.github.com/articles/importing-a-git-repository-using-the-command-line/) (and you probably know how to do this better than I do, so please submit some pull requests to improve this). Once you have everything, run `pip install -r requirements.txt` to install the needed packages, mainly Python-Twitter and Fabric.
@@ -36,7 +36,7 @@ config = {
 }
 ```
 
-###Running the bot
+### Running the bot
 There are a few ways to do this. 
 
 You can run the project off your own machine. This isn't a problem if you only want to send our tweets occasionally or have a computer that's always on.

@@ -4,7 +4,7 @@ Bot to get data from Chicago data portal and tweet it.
 
 #!/usr/bin/env python
 
-import time, urllib, urllib2, twitter, locale, os
+import time, urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse, twitter, locale, os
 import simplejson as json
 from datetime import date, datetime, timedelta
 from config import config
@@ -27,7 +27,7 @@ def test_api():
 	                    access_token_key=config['access_token_key'],
 	                    access_token_secret=config['access_token_secret'])
 	
-	print api.VerifyCredentials()
+	print(api.VerifyCredentials())
 	return api
 
 # Search the dataportal for building permits or the given number of days, limit and offset
@@ -42,15 +42,15 @@ def get_data(limit=1000,offset=0, days=1):
 	#yesterday = date.today().isoformat()
 	query = "$where=_issue_date>'%s' &$limit=%s&$offset=%s" % (yesterday, limit, offset)
 
-	qquery = urllib.quote(query, '=&?$')
+	qquery = urllib.parse.quote(query, '=&?$')
 	url = endpoint+qquery
 
 	try:
-		resp = urllib2.urlopen(url)
+		resp = urllib.request.urlopen(url)
 		contents = resp.read()
 		return contents
-	except urllib2.HTTPError, error:
-		print error.read()
+	except urllib.error.HTTPError as error:
+		print(error.read())
 	
 # Search for individual permits greater than $500,000 and tweet
 # Takes number of days to look back as arguement
@@ -88,7 +88,7 @@ def find_high(days=1):
 			dupe = duplicate_check(id,'tweeted_permit_ids.txt')
 			if dupe == 0:
 				text =  "We got a big one: $"+ "{:,.0f}".format(cost) +" permit " + permit_type +" issued on " + prettydate + " at " + address + " " +link
-				print text
+				print(text)
 				post_status(text)
 
 				# Once tweeted, add file to list
@@ -112,7 +112,7 @@ def get_summary(days=30):
 			cost += float(permit['_estimated_cost'])
 
 		offset += len(permits)
-		print offset
+		print(offset)
 
 		# Get more data, incrementing call by offset = number of records already parsed
 		data = get_data(days=days,offset=offset)
@@ -120,7 +120,7 @@ def get_summary(days=30):
 
 	text = "Over the past " + str(days) + " days there have been " + "{:,.0f}".format(offset) + " permits issued in Chicago, totaling $" + "{:,.0f}".format(cost) + " " + link
 
-	print text
+	print(text)
 	post_status(text)
 
 # Search for individual demolition permits and tweet
@@ -158,7 +158,7 @@ def find_demo(days=1):
 			dupe = duplicate_check(id,'tweeted_demo_ids.txt')
 			if dupe == 0:
 				text =  "Building (maybe) coming down: New wrecking/demolition permit at " + address + " issued " + prettydate + " " + link
-				print text
+				print(text)
 				post_status(text)
 
 				# Once tweeted, add file to list
@@ -179,13 +179,13 @@ def reply():
 	
 	for tweet in reversed(mentions):
 		id = tweet.id_str
-		print id
+		print(id)
 		replied = duplicate_check(id,'replied_mentions.txt')
 
 		if replied == 0:
 			add_id_to_file(id,id_file)
 			if tweet.coordinates:
-				print tweet.coordinates
+				print(tweet.coordinates)
 
 
 
